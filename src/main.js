@@ -1,7 +1,7 @@
 import { Client, Databases } from "node-appwrite";
 
 async function updateMMI(log, databases, DOCUMENT_ID, score) {
-  log("CNN DOCUMENT ID", DOCUMENT_ID);
+  log("CNN DOCUMENT ID: " + DOCUMENT_ID);
 
   const res = await databases.updateDocument(
     process.env.DATABASE_ID,
@@ -10,7 +10,7 @@ async function updateMMI(log, databases, DOCUMENT_ID, score) {
     { score: score }
   );
 
-  log("CNN MMI UPDATED: ", res);
+  log("[CNN MMI UPDATED] ID: " + res.$id);
 }
 
 async function update_CNN_MMI(log, databases) {
