@@ -1,8 +1,6 @@
 import { Client, Databases } from "node-appwrite";
 
 async function updateMMI(log, databases, DOCUMENT_ID, score) {
-  log("CNN DOCUMENT ID: " + DOCUMENT_ID);
-
   const res = await databases.updateDocument(
     process.env.DATABASE_ID,
     process.env.COLLECTION_ID,
@@ -10,13 +8,19 @@ async function updateMMI(log, databases, DOCUMENT_ID, score) {
     { score: score }
   );
 
-  log("[CNN MMI UPDATED] ID: " + res.$id);
+  if (DOCUMENT_ID == res.$id) log("[MMI UPDATED] ID: " + res.$id);
 }
 
 async function update_CNN_MMI(log, databases) {
   let score = Math.floor(Math.random() * 101);
 
   await updateMMI(log, databases, process.env.CNN_DOCUMENT_ID, score);
+}
+
+async function update_TICKERTAPE_MMI(log, databases) {
+  let score = Math.floor(Math.random() * 101);
+
+  await updateMMI(log, databases, process.env.TICKERTAPE_DOCUMENT_ID, score);
 }
 
 // This is your Appwrite function
@@ -32,6 +36,7 @@ export default async ({ req, res, log, error }) => {
   const databases = new Databases(client);
 
   await update_CNN_MMI(log, databases);
+  await update_TICKERTAPE_MMI(log, databases);
 
   return res.send("DATABASE_QUERY_EXECTUED");
 };
