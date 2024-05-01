@@ -1,33 +1,35 @@
-import { Client } from 'node-appwrite';
+import { Client, Databases } from "node-appwrite";
+
+async function updateMMI(log, databases, DOCUMENT_ID, score) {
+  const res = await databases.updateDocument(
+    process.env.DATABASE_ID,
+    process.env.COLLECTION_ID,
+    DOCUMENT_ID,
+    { score: score }
+  );
+
+  log("CNN MMI UPDATED: ", res);
+}
+
+async function update_CNN_MMI(log, databases) {
+  let score = Math.floor(Math.random() * 101);
+
+  await updateMMI(log, databases, process.env.CNN_DOCUMENT_ID, score);
+}
 
 // This is your Appwrite function
 // It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
   // Why not try the Appwrite SDK?
   //
-  // const client = new Client()
-  //    .setEndpoint('https://cloud.appwrite.io/v1')
-  //    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-  //    .setKey(process.env.APPWRITE_API_KEY);
+  const client = new Client()
+    .setEndpoint("https://cloud.appwrite.io/v1")
+    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
+    .setKey(process.env.APPWRITE_API_KEY);
 
-  // You can log messages to the console
-  log('Hello, Logs!');
+  const databases = new Databases(client);
 
-  // If something goes wrong, log an error
-  error('Hello, Errors!');
+  await update_CNN_MMI(log, databases);
 
-  // The `req` object contains the request data
-  if (req.method === 'GET') {
-    // Send a response with the res object helpers
-    // `res.send()` dispatches a string back to the client
-    return res.send('Hello, World!');
-  }
-
-  // `res.json()` is a handy helper for sending JSON
-  return res.json({
-    motto: 'Build like a team of hundreds_',
-    learn: 'https://appwrite.io/docs',
-    connect: 'https://appwrite.io/discord',
-    getInspired: 'https://builtwith.appwrite.io',
-  });
+  return res.send("DATABASE_QUERY_EXECTUED");
 };
