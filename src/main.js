@@ -1,4 +1,5 @@
 import { Client, Databases } from "node-appwrite";
+import { getCNNMMI, getTickerTapeMMI } from "./scrape-mmi";
 
 async function updateMMI(log, databases, DOCUMENT_ID, score) {
   const res = await databases.updateDocument(
@@ -12,13 +13,13 @@ async function updateMMI(log, databases, DOCUMENT_ID, score) {
 }
 
 async function update_CNN_MMI(log, databases) {
-  let score = Math.floor(Math.random() * 101);
+  let score = (await getCNNMMI(log)) || 0;
 
   await updateMMI(log, databases, process.env.CNN_DOCUMENT_ID, score);
 }
 
 async function update_TICKERTAPE_MMI(log, databases) {
-  let score = Math.floor(Math.random() * 101);
+  let score = (await getTickerTapeMMI(log)) || 0;
 
   await updateMMI(log, databases, process.env.TICKERTAPE_DOCUMENT_ID, score);
 }
