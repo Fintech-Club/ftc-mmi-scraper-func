@@ -6,7 +6,7 @@ async function updateMMI(log, databases, DOCUMENT_ID, score) {
     process.env.DATABASE_ID,
     process.env.COLLECTION_ID,
     DOCUMENT_ID,
-    { score: score }
+    { score: score },
   );
 
   if (DOCUMENT_ID == res.$id) log("[MMI UPDATED] ID: " + res.$id);

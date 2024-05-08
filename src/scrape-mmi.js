@@ -24,7 +24,7 @@ export async function getTickerTapeMMI(log) {
   try {
     const mmi = await scrapePage(
       "https://www.tickertape.in/market-mood-index",
-      "div.mmi-value > span.number"
+      "div.mmi-value > span.number",
     );
 
     return parseInt(mmi);
@@ -38,7 +38,7 @@ export async function getCNNMMI(log) {
   try {
     const mmi = await scrapePage(
       "https://edition.cnn.com/markets/fear-and-greed",
-      "div.market-fng-gauge__dial > span.market-fng-gauge__dial-number-value"
+      "div.market-fng-gauge__dial > span.market-fng-gauge__dial-number-value",
     );
 
     return parseInt(mmi);
