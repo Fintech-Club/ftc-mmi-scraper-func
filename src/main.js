@@ -31,7 +31,7 @@ export async function getTickerTapeMMI(log) {
       "div.mmi-value > span.number"
     );
 
-    return parseInt(mmi);
+    return parseFloat(mmi);
   } catch (error) {
     console.error("Error fetching or parsing page:", error);
     return null;
@@ -45,7 +45,7 @@ export async function getCNNMMI(log) {
       "div.market-fng-gauge__dial > span.market-fng-gauge__dial-number-value"
     );
 
-    return parseInt(mmi);
+    return parseFloat(mmi);
   } catch (error) {
     console.error("Error fetching or parsing page:", error);
     return null;
